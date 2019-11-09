@@ -1,0 +1,35 @@
+---
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovNetworkNodePolicy
+metadata:
+  name: policy-net-1
+spec:
+  resourceName: nic1
+  nodeSelector:
+    feature.node.kubernetes.io/network-sriov.capable: "true"
+  priority: 99
+  mtu: 9000
+  numVfs: 4
+  nicSelector:
+    vendor: "8086"
+    pfNames: ['ens803f0']
+    rootDevices: ['0000:86:00.0',]
+  deviceType: vfio-pci
+
+---
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovNetworkNodePolicy
+metadata:
+  name: policy-net-2
+spec:
+  resourceName: nic2
+  nodeSelector:
+    feature.node.kubernetes.io/network-sriov.capable: "true"
+  priority: 99
+  mtu: 9000
+  numVfs: 4
+  nicSelector:
+    vendor: "8086"
+    pfNames: ['ens803f1']
+    rootDevices: ['0000:86:00.1',]
+  deviceType: vfio-pci
