@@ -2,34 +2,32 @@
 apiVersion: sriovnetwork.openshift.io/v1
 kind: SriovNetworkNodePolicy
 metadata:
-  name: policy-net-1
+  name: policy-mlx-1
 spec:
-  resourceName: nic1
+  resourceName: nicmlx1
   nodeSelector:
     feature.node.kubernetes.io/network-sriov.capable: "true"
   priority: 99
-  mtu: 9000
+  isRdma: true
   numVfs: 4
   nicSelector:
-    vendor: "8086"
-    pfNames: ['ens803f0']
-    rootDevices: ['0000:86:00.0']
-  deviceType: vfio-pci
+    vendor: "15b3"
+    pfNames: ['ens787f0']
+    rootDevices: ['0000:88:00.0']
 
 ---
 apiVersion: sriovnetwork.openshift.io/v1
 kind: SriovNetworkNodePolicy
 metadata:
-  name: policy-net-2
+  name: policy-mlx-2
 spec:
-  resourceName: nic2
+  resourceName: nicmlx2
   nodeSelector:
     feature.node.kubernetes.io/network-sriov.capable: "true"
   priority: 99
-  mtu: 9000
+  isRdma: true
   numVfs: 4
   nicSelector:
-    vendor: "8086"
-    pfNames: ['ens803f1']
-    rootDevices: ['0000:86:00.1']
-  deviceType: vfio-pci
+    vendor: "15b3"
+    pfNames: ['ens787f1']
+    rootDevices: ['0000:88:00.1']

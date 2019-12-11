@@ -1,0 +1,14 @@
+FROM quay.io/pliurh/rdma_dpdk
+WORKDIR /usr/src
+RUN wget http://www.lua.org/ftp/lua-5.3.4.tar.gz && tar xzvf lua-5.3.4.tar.gz
+WORKDIR /usr/src/lua-5.3.4
+RUN yum install git libpcap-devel patch which readline-devel -y
+RUN make linux && make install
+WORKDIR /usr/src
+RUN git clone http://dpdk.org/git/apps/pktgen-dpdk
+WORKDIR /usr/src/pktgen-dpdk
+ENV DPDK_VER 19.08
+ENV DPDK_DIR /usr/src/dpdk-${DPDK_VER}
+ENV RTE_TARGET=x86_64-native-linuxapp-gcc
+ENV RTE_SDK=${DPDK_DIR}
+RUN make && cp /usr/src/pktgen-dpdk/app/x86_64-native-linuxapp-gcc/pktgen /usr/bin

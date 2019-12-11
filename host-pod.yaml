@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test
+spec:
+  hostNetwork: true
+  hostPID: true
+  containers:
+  - name: test 
+    image: quay.io/pliurh/dpdk_app
+    securityContext:
+     privileged: true
+    command: [ "/bin/bash", "-c", "--" ]
+    args: [ "while true; do sleep 300000000; done;" ]

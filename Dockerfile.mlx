@@ -1,0 +1,13 @@
+FROM centos:centos7.7.1908
+ARG MOFED_VER=4.7-1.0.0.1
+ENV MOFED_VER $MOFED_VER
+ENV OS_VER rhel7.7
+ENV PLATFORM x86_64
+RUN yum install -y perl numactl-libs gtk2 atk cairo gcc-gfortran tcsh libnl3 tcl tk python-devel \
+    pciutils make lsof redhat-rpm-config rpm-build libxml2-python ethtool \
+    iproute net-tools openssh-clients git openssh-server wget
+WORKDIR /tmp/
+RUN wget http://content.mellanox.com/ofed/MLNX_OFED-${MOFED_VER}/MLNX_OFED_LINUX-${MOFED_VER}-${OS_VER}-${PLATFORM}.tgz && \
+    tar -xf MLNX_OFED_LINUX-${MOFED_VER}-${OS_VER}-${PLATFORM}.tgz && \
+    MLNX_OFED_LINUX-${MOFED_VER}-${OS_VER}-${PLATFORM}/mlnxofedinstall --upstream-libs --dpdk --user-space-only --without-fw-update --all --force \
+    && rm -rf /tmp/
